@@ -1,0 +1,52 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	background-color: #333;
+	color: white;
+	font-family: sans-serif;
+}
+
+body {
+	margin: 0;
+}
+
+section {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+form {
+    margin: 0 auto;
+    max-width: 300px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px auto;
+    border: none;
+}
+
+a, a:active, a:visited {
+	color: #8080FF;
+}
+
+.flash {
+	padding: 10px;
+	border: solid 1px grey;
+	background-color: lightgray;
+	color: black;
+	border-radius: 10px;
+	margin: 10px 0;
+}
+
+.flash-error {
+	border-color: red;
+	background-color: lightcoral;
+}

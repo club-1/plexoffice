@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Invitation Plex{% endblock %}
+
+{% block content %}
+
+<h1>Invitation Plex CLUB1</h1>
+<h3>
+	Salut, tu as été invité·e sur le serveur multimedia Plex de CLUB1.
+</h3>
+
+<p>
+	Pour accéder au contenus multimédias <strong>inscrit toi d'abord sur <a href="https://www.plex.tv/sign-up/">plex.tv</a></strong>
+	puis tapes l'adresse avec l'aquelle tu t'es inscrit·e ci dessous :
+</p>
+
+
+<form action="{% url 'invite-add' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+	<input type="submit" value="Obtenir un accès aux bibliothèques">
+</form>
+
+{% endblock %}

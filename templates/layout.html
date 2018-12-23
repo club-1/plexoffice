@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% block head %}{% endblock %}
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="Revisit-After" content="15 days"/>
+	<meta name="Robots" content="All"/>
+	<meta name="Keywords" content=""/>
+	<meta name="Description" content=""/>
+</head>
+<body>
+
+	<section>
+	{% block messages %}
+
+		{% for message in messages %}
+		<p class="flash flash-{{ message.tags }}">{{ message }}</p>
+		{% endfor %}
+
+	{% endblock %}
+
+		{% block content %}{% endblock %}
+	</section>
+</body>
+</html>
