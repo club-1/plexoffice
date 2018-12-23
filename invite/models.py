@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.shortcuts import redirect
 import hashlib
 from time import time
 
@@ -26,3 +27,6 @@ class Token(models.Model):
 
     def __str__(self):
         return self.string
+
+    def share_url(self):
+        return redirect('invite-home', self.string).url
