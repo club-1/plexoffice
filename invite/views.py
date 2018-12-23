@@ -8,9 +8,8 @@ from .forms import addForm
 from .models import Token
 
 
-def home(request):
+def home(request, tokenString=''):
     form = addForm(None)
-    tokenString = request.GET.get('token', '')
     token = get_object_or_404(Token, string=tokenString)
     if token.date_usage != None:
         return redirect('invite-expired')
@@ -34,6 +33,7 @@ def listUsers(request):
 
 def addFriend(request):
     form = addForm(request.POST)
+    tokenString = ''
     if form.is_valid():
         tokenString = form.cleaned_data['token']
         token = get_object_or_404(Token, string=tokenString)
@@ -59,4 +59,4 @@ def addFriend(request):
                 'L\'accès a déjà été accordé à cette adresse email')
         except Exception as e:
             messages.error(request, 'Internal error: ' + e)
-    return redirect('invite-home')
+    return redirect('invite-home', tokenString)
