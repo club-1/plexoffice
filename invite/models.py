@@ -12,9 +12,13 @@ class Token(models.Model):
         default=timezone.now,
         verbose_name="Creation date")
     date_usage = models.DateTimeField(
-        default=timezone.now,
+        null=True,
+        blank=True,
         verbose_name="Usage date")
-    used_by = models.CharField(max_length=255)
+    used_by = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True)
 
     class Meta:
         verbose_name = "token"

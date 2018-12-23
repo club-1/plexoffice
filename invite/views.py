@@ -1,18 +1,29 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
+from django.utils import timezone
 
 from plexapi.myplex import MyPlexAccount, BadRequest
 from .forms import addForm
+from .models import Token
 
 
 def home(request):
-    form = addForm(request.POST or None)
+    form = addForm(None)
+    tokenString = request.GET.get('token', '')
+    token = get_object_or_404(Token, string=tokenString)
+    if token.date_usage != None:
+        return redirect('invite-expired')
+    form.fields['token'].initial = tokenString
     return render(request, 'invite/home.html', {'form': form})
 
 
 def confirm(request):
     return render(request, 'invite/confirm.html')
+
+
+def expired(request):
+    return render(request, 'invite/expired.html')
 
 
 def listUsers(request):
@@ -24,15 +35,23 @@ def listUsers(request):
 def addFriend(request):
     form = addForm(request.POST)
     if form.is_valid():
+        tokenString = form.cleaned_data['token']
+        token = get_object_or_404(Token, string=tokenString)
+        if token.date_usage != None:
+            return redirect('invite-expired')
         account = MyPlexAccount(
             settings.PLEX['LOGIN'],
             settings.PLEX['PASSWORD'])
         try:
+            email = form.cleaned_data['email']
             account.inviteFriend(
-                form.cleaned_data['email'],
+                email,
                 'b9920c8e436c79b55d89c46e51c9e832059ec292',
                 ['4', '5', '6', '7']
             )
+            token.date_usage = timezone.now()
+            token.used_by = email
+            token.save()
             return redirect('invite-confirm')
         except BadRequest:
             messages.error(
