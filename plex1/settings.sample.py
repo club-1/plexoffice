@@ -129,5 +129,5 @@ STATICFILES_DIRS = (
 
 PLEX = {
     'LOGIN': '',
-    'PASSORD': '',
+    'PASSWORD': '',
 }
