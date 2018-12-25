@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}Invitation Plex{% endblock %}
+
+{% block content %}
+
+<h1>Hello</h1>
+<p>world</p>
+<ul>
+{% for section in sections %}
+	<li>
+		<label>
+			<input type="checkbox" value="{{section.key}}">
+			{{ section.title }}
+		</label>
+	</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

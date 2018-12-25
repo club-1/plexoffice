@@ -1,13 +1,15 @@
 from django.db import models
 from django.utils import timezone
 from django.shortcuts import redirect
-import hashlib
+
+import jsonfield
+from hashlib import sha1
 from time import time
 
 
 class Token(models.Model):
     string = models.CharField(
-        default=hashlib.sha1(str(time()).encode()).hexdigest(),
+        default=sha1(str(time()).encode()).hexdigest(),
         max_length=255)
     date_creation = models.DateTimeField(
         default=timezone.now,
@@ -20,6 +22,7 @@ class Token(models.Model):
         max_length=255,
         null=True,
         blank=True)
+    libraries = jsonfield.JSONField()
 
     class Meta:
         verbose_name = "token"

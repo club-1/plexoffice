@@ -50,3 +50,9 @@ a, a:active, a:visited {
 	border-color: red;
 	background-color: lightcoral;
 }
+
+
+input[type="checkbox"] {
+    display: inline;
+    width: auto;
+}

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.utils import timezone
 
-from plexapi.myplex import MyPlexAccount, BadRequest
+from plexapi.myplex import MyPlexAccount, PlexServer, BadRequest
 from .forms import addForm
 from .models import Token
 
@@ -31,6 +31,13 @@ def listUsers(request):
     return render(request, 'invite/listUsers.html', {'users': users})
 
 
+def listSections(request):
+    account = MyPlexAccount(settings.PLEX['LOGIN'], settings.PLEX['PASSWORD'])
+    plex = PlexServer(settings.PLEX['URL'], account._token)
+    sections = plex.library.sections()
+    return render(request, 'invite/listSections.html', {'sections': sections})
+
+
 def addFriend(request):
     form = addForm(request.POST)
     tokenString = ''
@@ -46,8 +53,8 @@ def addFriend(request):
             email = form.cleaned_data['email']
             account.inviteFriend(
                 email,
-                'b9920c8e436c79b55d89c46e51c9e832059ec292',
-                ['4', '5', '6', '7']
+                settings.PLEX['SERVER'],
+                token.sections
             )
             token.date_usage = timezone.now()
             token.used_by = email

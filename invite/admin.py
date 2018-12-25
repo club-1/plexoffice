@@ -12,7 +12,7 @@ class TokenAdmin(admin.ModelAdmin):
     search_fields = ('string', 'used_by')
 
     def share_url(self, obj):
-        return format_html("<a href='{url}'>Link</a>", url=obj.share_url())
+        return format_html('<a href="{url}" target="_blank">Link</a>', url=obj.share_url())
 
 
 admin.site.register(Token, TokenAdmin)

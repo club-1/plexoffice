@@ -130,4 +130,6 @@ STATICFILES_DIRS = (
 PLEX = {
     'LOGIN': '',
     'PASSWORD': '',
+    'SERVER': '',
+    'URL': 'http://localhost:32000',
 }
