@@ -1,4 +1,6 @@
 settings.py
+static/collect/*
+!static/collect/README.md
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
