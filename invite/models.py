@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.shortcuts import redirect
+from .plex import sectionKey2Title
 
 import jsonfield
 from hashlib import sha1
@@ -33,3 +34,10 @@ class Token(models.Model):
 
     def share_url(self):
         return redirect('invite-home', self.string).url
+
+    def title_libraries(self):
+        return list(map(lambda x: sectionKey2Title(x), self.libraries))
+    title_libraries.verbose_name = "libraries"
+
+    def nb_libraries(self):
+        return len(self.libraries)

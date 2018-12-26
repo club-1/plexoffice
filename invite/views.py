@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.conf import settings
 from django.utils import timezone
 
-from plexapi.myplex import MyPlexAccount, PlexServer, BadRequest
+from .plex import getAccount, getServer, getSections, inviteFriend
+from plexapi.myplex import BadRequest
 from .forms import addForm
 from .models import Token
 
@@ -26,15 +27,13 @@ def expired(request):
 
 
 def listUsers(request):
-    account = MyPlexAccount(settings.PLEX['LOGIN'], settings.PLEX['PASSWORD'])
+    account = getAccount()
     users = account.users()
     return render(request, 'invite/listUsers.html', {'users': users})
 
 
 def listSections(request):
-    account = MyPlexAccount(settings.PLEX['LOGIN'], settings.PLEX['PASSWORD'])
-    plex = PlexServer(settings.PLEX['URL'], account._token)
-    sections = plex.library.sections()
+    sections = getSections()
     return render(request, 'invite/listSections.html', {'sections': sections})
 
 
@@ -46,16 +45,9 @@ def addFriend(request):
         token = get_object_or_404(Token, string=tokenString)
         if token.date_usage != None:
             return redirect('invite-expired')
-        account = MyPlexAccount(
-            settings.PLEX['LOGIN'],
-            settings.PLEX['PASSWORD'])
         try:
             email = form.cleaned_data['email']
-            account.inviteFriend(
-                email,
-                settings.PLEX['SERVER'],
-                token.sections
-            )
+            inviteFriend(email, token.sections)
             token.date_usage = timezone.now()
             token.used_by = email
             token.save()
