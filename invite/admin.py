@@ -24,3 +24,7 @@ class TokenAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Token, TokenAdmin)
+
+admin.site.site_header = 'Plexoffice admin'
+admin.site.site_title = 'Plexoffice admin'
+admin.site.index_title = 'Plexoffice administration'
