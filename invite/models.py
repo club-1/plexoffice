@@ -8,9 +8,13 @@ from hashlib import sha1
 from time import time
 
 
+def genString():
+    return sha1(str(time()).encode()).hexdigest()
+
+
 class Token(models.Model):
     string = models.CharField(
-        default=sha1(str(time()).encode()).hexdigest(),
+        default=genString,
         max_length=255)
     date_creation = models.DateTimeField(
         default=timezone.now,
