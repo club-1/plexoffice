@@ -31,6 +31,11 @@ def getSections():
     return section
 
 
+def sectionKeys():
+    sections = getSections()
+    return list(map(lambda x: int(x.key), sections))
+
+
 def sectionKey2Title(key):
     sections = getSections()
     for section in sections:
