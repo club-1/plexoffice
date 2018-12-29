@@ -1,14 +1,14 @@
 from django import forms
-from .models import Token
+from .models import Invitation
 from .plex import getSections, sectionKeys
 
 
 class addForm(forms.Form):
-    email = forms.EmailField(label="Email")
-    token = forms.CharField(widget=forms.HiddenInput())
+    plex_token = forms.CharField(widget=forms.HiddenInput())
+    invitation = forms.CharField(widget=forms.HiddenInput())
 
 
-class tokenAdminForm(forms.ModelForm):
+class invitationAdminForm(forms.ModelForm):
     choices = list(map(lambda x: [x.key, x.title], getSections()))
     libraries = forms.MultipleChoiceField(
         choices=choices,
@@ -16,7 +16,7 @@ class tokenAdminForm(forms.ModelForm):
         initial=sectionKeys)
 
     class Meta:
-        model = Token
+        model = Invitation
         fields = '__all__'
 
     def clean_libraries(self):

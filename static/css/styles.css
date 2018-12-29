@@ -19,12 +19,12 @@ section {
 }
 
 
-form {
+form, button {
     margin: 0 auto;
     max-width: 300px;
 }
 
-input {
+button, input {
     display: block;
     width: 100%;
     border-radius: 20px;
@@ -49,6 +49,10 @@ a, a:active, a:visited {
 .flash-error {
 	border-color: red;
 	background-color: lightcoral;
+}
+
+#js-error {
+	display: none;
 }
 
 

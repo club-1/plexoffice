@@ -4,17 +4,17 @@ from django.conf import settings
 from django.utils import timezone
 
 from .plex import getAccount, getServer, getSections, inviteFriend
-from plexapi.myplex import BadRequest
+from plexapi.myplex import BadRequest, MyPlexAccount
 from .forms import addForm
-from .models import Token
+from .models import Invitation
 
 
-def home(request, tokenString=''):
+def home(request, invitationToken=''):
     form = addForm(None)
-    token = get_object_or_404(Token, string=tokenString)
-    if token.date_usage != None:
+    invitation = get_object_or_404(Invitation, token=invitationToken)
+    if invitation.date_usage != None:
         return redirect('invite-expired')
-    form.fields['token'].initial = tokenString
+    form.fields['invitation'].initial = invitationToken
     return render(request, 'invite/home.html', {'form': form})
 
 
@@ -39,23 +39,24 @@ def listSections(request):
 
 def addFriend(request):
     form = addForm(request.POST)
-    tokenString = ''
+    invitationToken = ''
     if form.is_valid():
-        tokenString = form.cleaned_data['token']
-        token = get_object_or_404(Token, string=tokenString)
-        if token.date_usage != None:
+        invitationToken = form.cleaned_data['invitation']
+        invitation = get_object_or_404(Invitation, token=invitationToken)
+        if invitation.date_usage != None:
             return redirect('invite-expired')
         try:
-            email = form.cleaned_data['email']
-            inviteFriend(email, token.sections)
-            token.date_usage = timezone.now()
-            token.used_by = email
-            token.save()
+            plexToken = form.cleaned_data['plex_token']
+            user = MyPlexAccount(token=plexToken)
+            inviteFriend(user.email, invitation.libraries)
+            invitation.date_usage = timezone.now()
+            invitation.used_by = user.email
+            invitation.save()
             return redirect('invite-confirm')
         except BadRequest:
             messages.error(
                 request,
-                'L\'accès a déjà été accordé à cette adresse email')
+                'L\'accès a déjà été accordé à cet utilisateur')
         except Exception as e:
             messages.error(request, 'Internal error: ' + e)
-    return redirect('invite-home', tokenString)
+    return redirect('invite-home', invitationToken)

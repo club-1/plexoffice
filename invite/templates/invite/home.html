@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
+{% load static %}
 {% block title %}Invitation Plex{% endblock %}
+
+
 
 {% block content %}
 
@@ -10,14 +13,35 @@
 
 <p>
 	Pour accéder au contenus multimédias <strong>inscrit toi d'abord sur <a href="https://www.plex.tv/sign-up/">plex.tv</a></strong>
-	puis tapes l'adresse avec l'aquelle tu t'es inscrit·e ci dessous :
 </p>
 
+<button id="sign-in-plex">Se connecter/S'inscrire sur Plex</button>
 
-<form action="{% url 'invite-add' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-	<input type="submit" value="Obtenir un accès aux bibliothèques">
+<form action="{% url 'invite-add' %}" method="post" id="request-access">
+	{% csrf_token %}
+	{{ form.as_p }}
 </form>
 
 {% endblock %}
+
+
+
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
+<script src="{% static 'invite/js/plex-auth.js' %}"></script>
+<script>
+	function OAuthSuccessCallback(authToken) {
+		var form = $('#request-access');
+		form.children('input[name="plex_token"]').val(authToken);
+		form.submit();
+	}
+	function OAuthErrorCallback() {
+		$('#js-error').text('Error communicating with Plex.tv.').show();
+	}
+	$('#sign-in-plex').click(function() {
+		PlexOAuth(OAuthSuccessCallback, OAuthErrorCallback);
+	});
+</script>
+{% endblock js %}

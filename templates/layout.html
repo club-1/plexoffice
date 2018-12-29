@@ -15,15 +15,23 @@
 <body>
 
 	<section>
-	{% block messages %}
+		<div id="messages">
+		{% block messages %}
+			<p class="flash flash-error" id="js-error"></p>
 
-		{% for message in messages %}
-		<p class="flash flash-{{ message.tags }}">{{ message }}</p>
-		{% endfor %}
+			{% for message in messages %}
+			<p class="flash flash-{{ message.tags }}">{{ message }}</p>
+			{% endfor %}
 
-	{% endblock %}
+		{% endblock %}
+		</div>
 
 		{% block content %}{% endblock %}
 	</section>
+
+{% block js %}
+
+{% endblock js %}
+
 </body>
 </html>

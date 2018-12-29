@@ -12,8 +12,8 @@ def genString():
     return sha1(str(time()).encode()).hexdigest()
 
 
-class Token(models.Model):
-    string = models.CharField(
+class Invitation(models.Model):
+    token = models.CharField(
         default=genString,
         max_length=255)
     date_creation = models.DateTimeField(
@@ -30,14 +30,14 @@ class Token(models.Model):
     libraries = jsonfield.JSONField()
 
     class Meta:
-        verbose_name = "token"
+        verbose_name = "invitation"
         ordering = ['date_creation']
 
     def __str__(self):
-        return self.string
+        return self.token
 
     def share_url(self):
-        return redirect('invite-home', self.string).url
+        return redirect('invite-home', self.token).url
 
     def title_libraries(self):
         return list(map(lambda x: sectionKey2Title(x), self.libraries))
