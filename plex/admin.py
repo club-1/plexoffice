@@ -10,10 +10,13 @@ class InvitationAdmin(admin.ModelAdmin):
         'token',
         'date_creation',
         'nb_libraries',
+        'sent',
         'date_usage',
         'used_by',
         'share_url')
-    list_filter = ('date_usage',)
+    list_filter = (
+        'date_usage',
+        'sent')
     date_hierarchy = 'date_creation'
     ordering = ('date_creation', )
     search_fields = ('token', 'used_by')

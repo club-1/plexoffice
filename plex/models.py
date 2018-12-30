@@ -28,6 +28,8 @@ class Invitation(models.Model):
         null=True,
         blank=True)
     libraries = jsonfield.JSONField()
+    sent = models.BooleanField(
+        default=False)
 
     class Meta:
         verbose_name = "invitation"
@@ -45,3 +47,4 @@ class Invitation(models.Model):
 
     def nb_libraries(self):
         return len(self.libraries)
+    nb_libraries.verbose_name = "libraries"
