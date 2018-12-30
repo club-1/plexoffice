@@ -37,7 +37,7 @@ class Invitation(models.Model):
         return self.token
 
     def share_url(self):
-        return redirect('plex-invite', self.token).url
+        return redirect('plex-invite-home', self.token).url
 
     def title_libraries(self):
         return list(map(lambda x: sectionKey2Title(x), self.libraries))

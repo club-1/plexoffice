@@ -18,7 +18,7 @@
 
 <button id="sign-in-plex">Se connecter/S'inscrire sur Plex</button>
 
-<form action="{% url 'invite-add' %}" method="post" id="request-access">
+<form action="{% url 'plex-invite-add' %}" method="post" id="request-access">
 	{% csrf_token %}
 	{{ form.as_p }}
 </form>
@@ -31,7 +31,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
-<script src="{% static 'invite/js/plex-auth.js' %}"></script>
+<script src="{% static 'plex/js/plex-auth.js' %}"></script>
 <script>
 	function OAuthSuccessCallback(authToken) {
 		var form = $('#request-access');

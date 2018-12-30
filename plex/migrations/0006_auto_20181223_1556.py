@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invite', '0005_auto_20181223_1520'),
+        ('plex', '0005_auto_20181223_1520'),
     ]
 
     operations = [

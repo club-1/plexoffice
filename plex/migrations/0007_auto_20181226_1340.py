@@ -7,7 +7,7 @@ import jsonfield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('invite', '0006_auto_20181223_1556'),
+        ('plex', '0006_auto_20181223_1556'),
     ]
 
     operations = [

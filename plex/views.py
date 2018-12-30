@@ -13,28 +13,28 @@ def invite(request, invitationToken=''):
     form = addForm(None)
     invitation = get_object_or_404(Invitation, token=invitationToken)
     if invitation.date_usage != None:
-        return redirect('invite-expired')
+        return redirect('plex-invite-expired')
     form.fields['invitation'].initial = invitationToken
-    return render(request, 'invite/invite.html', {'form': form})
+    return render(request, 'plex/invite/home.html', {'form': form})
 
 
 def confirm(request):
-    return render(request, 'invite/confirm.html')
+    return render(request, 'plex/invite/confirm.html')
 
 
 def expired(request):
-    return render(request, 'invite/expired.html')
+    return render(request, 'plex/invite/expired.html')
 
 
 def listUsers(request):
     account = getAccount()
     users = account.users()
-    return render(request, 'invite/listUsers.html', {'users': users})
+    return render(request, 'plex/listUsers.html', {'users': users})
 
 
 def listSections(request):
     sections = getSections()
-    return render(request, 'invite/listSections.html', {'sections': sections})
+    return render(request, 'plex/listSections.html', {'sections': sections})
 
 
 def addFriend(request):
@@ -44,7 +44,7 @@ def addFriend(request):
         invitationToken = form.cleaned_data['invitation']
         invitation = get_object_or_404(Invitation, token=invitationToken)
         if invitation.date_usage != None:
-            return redirect('invite-expired')
+            return redirect('plex-invite-expired')
         try:
             plexToken = form.cleaned_data['plex_token']
             user = MyPlexAccount(token=plexToken)
@@ -52,7 +52,7 @@ def addFriend(request):
             invitation.date_usage = timezone.now()
             invitation.used_by = user.email
             invitation.save()
-            return redirect('invite-confirm')
+            return redirect('plex-invite-confirm')
         except BadRequest as e:
             print(e)
             messages.error(
@@ -60,4 +60,4 @@ def addFriend(request):
                 'L\'accès a déjà été accordé à cet utilisateur')
         except Exception as e:
             messages.error(request, 'Internal error: ' + e)
-    return redirect('plex-invite', invitationToken)
+    return redirect('plex-invite-home', invitationToken)
