@@ -41,7 +41,7 @@ function uuidv4() {
 
 var x_plex_headers = {
 	'Accept': 'application/json',
-	'X-Plex-Product': 'Plexoffice',
+	'X-Plex-Product': 'CLUB1',
 	'X-Plex-Version': 'Plex OAuth',
 	'X-Plex-Client-Identifier': uuidv4(),
 	'X-Plex-Platform': p.name,
