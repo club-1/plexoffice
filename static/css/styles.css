@@ -22,6 +22,7 @@ section {
 form, button {
     margin: 0 auto;
     max-width: 300px;
+    outline: none;
 }
 
 button, input {
@@ -55,8 +56,18 @@ a, a:active, a:visited {
 	display: none;
 }
 
-
+/* 
 input[type="checkbox"] {
     display: inline;
     width: auto;
+} */
+
+button:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}
+
+button:active {
+    outline: none;
+    background-color: grey;
 }
