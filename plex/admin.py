@@ -25,6 +25,16 @@ class InvitationAdmin(admin.ModelAdmin):
     def share_url(self, obj):
         return format_html('<a href="{url}" target="_blank">Link</a>', url=obj.share_url())
 
+    def mark_sent(self, request, queryset):
+        queryset.update(sent = True)
+    mark_sent.short_description = "Marquer comme envoyées"
+
+    def mark_not_sent(self, request, queryset):
+        queryset.update(sent = False)
+    mark_not_sent.short_description = "Marquer comme NON envoyées"
+
+    actions = (mark_sent, mark_not_sent)
+
 
 admin.site.register(Invitation, InvitationAdmin)
 
