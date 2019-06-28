@@ -28,8 +28,10 @@ class Invitation(models.Model):
         null=True,
         blank=True)
     libraries = jsonfield.JSONField()
-    sent = models.BooleanField(
-        default=False)
+    sent_to = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True)
 
     class Meta:
         verbose_name = "invitation"
@@ -37,6 +39,9 @@ class Invitation(models.Model):
 
     def __str__(self):
         return self.token
+
+    def sent(self):
+        return self.sent_to is not None
 
     def share_url(self):
         return redirect('plex-invite-home', self.token).url
