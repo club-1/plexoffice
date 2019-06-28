@@ -3,6 +3,26 @@ from django.utils.html import format_html
 from .models import Invitation
 from .forms import invitationAdminForm
 
+class SentFilter(admin.SimpleListFilter):
+    title = 'sent'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'sent'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. (value, label)
+        """
+        return (
+            ('true', 'true'),
+            ('false', 'false'),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'true':
+            return queryset.filter(sent_to__isnull=False)
+        if self.value() == 'false':
+            return queryset.filter(sent_to__isnull=True)
 
 class InvitationAdmin(admin.ModelAdmin):
     form = invitationAdminForm
@@ -15,7 +35,8 @@ class InvitationAdmin(admin.ModelAdmin):
         'used_by',
         'share_url')
     list_filter = (
-        'date_usage',)
+        'date_usage',
+        SentFilter)
     date_hierarchy = 'date_creation'
     ordering = ('date_creation', )
     search_fields = ('token', 'used_by')
@@ -23,25 +44,21 @@ class InvitationAdmin(admin.ModelAdmin):
 
     def token_hash(self, obj):
         return format_html('<div class="token-hash" title="{token}">{token}</div>', token=obj.token)
+    token_trim.admin_order_field = 'token'
 
     def share_url(self, obj):
         return format_html('<a href="{url}" target="_blank">Link</a>', url=obj.share_url())
 
-    def mark_sent(self, request, queryset):
-        queryset.update(sent = True)
-    mark_sent.short_description = "Marquer comme envoyées"
-
     def mark_not_sent(self, request, queryset):
-        queryset.update(sent = False)
+        queryset.update(sent_to = None)
     mark_not_sent.short_description = "Marquer comme NON envoyées"
 
-    actions = (mark_sent, mark_not_sent)
+    actions = (mark_not_sent, )
 
     class Media:
         css = {
             'all': ('plex/css/admin.css',)
         }
-
 
 admin.site.register(Invitation, InvitationAdmin)
 
