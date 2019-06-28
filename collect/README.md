@@ -1,4 +1,4 @@
 # static/collect
 
-this is the folder where the `manage.y collectstatic` command should gather the
-static files
+This is the folder where `./manage.py collectstatic` gathers the
+static files.
