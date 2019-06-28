@@ -31,7 +31,8 @@ nano plexoffice/settings.py
 
 ## Update
 
-_`// TODO: write this section`_
+    ./manage.py migrate
+    ./manage.py collectstatic --noinput
 
 ## Deployment
 
