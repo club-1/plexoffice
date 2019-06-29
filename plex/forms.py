@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import Invitation
 from .plex import getSections, sectionKeys
 
@@ -11,6 +12,7 @@ class addForm(forms.Form):
 class invitationAdminForm(forms.ModelForm):
     choices = list(map(lambda x: [x.key, x.title], getSections()))
     libraries = forms.MultipleChoiceField(
+        label=_('Libraries'),
         choices=choices,
         widget=forms.CheckboxSelectMultiple(),
         initial=sectionKeys)

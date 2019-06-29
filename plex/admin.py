@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from .models import Invitation
 from .forms import invitationAdminForm
 
 class SentFilter(admin.SimpleListFilter):
-    title = 'sent'
+    title = _('Sent')
 
     # Parameter for the filter that will be used in the URL query.
     parameter_name = 'sent'
@@ -14,8 +15,8 @@ class SentFilter(admin.SimpleListFilter):
         Returns a list of tuples. (value, label)
         """
         return (
-            ('true', 'true'),
-            ('false', 'false'),
+            ('true', _('Yes')),
+            ('false', _('No')),
         )
 
     def queryset(self, request, queryset):
@@ -27,7 +28,7 @@ class SentFilter(admin.SimpleListFilter):
 class InvitationAdmin(admin.ModelAdmin):
     form = invitationAdminForm
     list_display = (
-        'token_hash',
+        'token_trim',
         'date_creation',
         'nb_libraries',
         'sent_to',
@@ -42,16 +43,18 @@ class InvitationAdmin(admin.ModelAdmin):
     search_fields = ('token', 'used_by')
     readonly_fields = ('date_usage', 'used_by', 'share_url')
 
-    def token_hash(self, obj):
+    def token_trim(self, obj):
         return format_html('<div class="token-hash" title="{token}">{token}</div>', token=obj.token)
+    token_trim.short_description = _('Token')
     token_trim.admin_order_field = 'token'
 
     def share_url(self, obj):
-        return format_html('<a href="{url}" target="_blank">Link</a>', url=obj.share_url())
+        return format_html('<a href="{url}" target="_blank">{link}</a>', url=obj.share_url(), link=_('Link'))
+    share_url.short_description = _('Share url')
 
     def mark_not_sent(self, request, queryset):
         queryset.update(sent_to = None)
-    mark_not_sent.short_description = "Marquer comme NON envoyées"
+    mark_not_sent.short_description = _('Mark as not sent')
 
     actions = (mark_not_sent, )
 
@@ -62,6 +65,6 @@ class InvitationAdmin(admin.ModelAdmin):
 
 admin.site.register(Invitation, InvitationAdmin)
 
-admin.site.site_header = 'Plexoffice admin'
-admin.site.site_title = 'Plexoffice admin'
-admin.site.index_title = 'Plexoffice administration'
+admin.site.site_header = _('Plexoffice admin')
+admin.site.site_title = _('Plexoffice admin')
+admin.site.index_title = _('Plexoffice administration')

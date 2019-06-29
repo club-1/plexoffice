@@ -4,7 +4,7 @@ A micro backoffice to manage some Plex stuffs, extensively using Django admin.
 
 ![plexoffice admin](docs/plexoffice-admin.png)
 
-## Getting started
+## Get started
 
 ### Install
 
@@ -20,21 +20,36 @@ pip install -r requirements.txt
 # copy sample settings file and edit credentials
 cp plexoffice/settings.sample.py plexoffice/settings.py
 nano plexoffice/settings.py
+```
 
+### Build
+
+```bash
+# update database schema
+./manage.py migrate
 # collect static files (not needed for development)
-./manage.py collectstatic
+./manage.py collectstatic --noinput
+# generate translation files
+./manage.py compilemessages
 ```
 
 ### Run
 
     ./manage.py runserver
 
-## Update
+## Develop
 
-    ./manage.py migrate
-    ./manage.py collectstatic --noinput
+Some tips about developing this app.
 
-## Deployment
+### Translate
+
+Generate the translation files:
+
+    ./manage.py makemessages -a
+
+## Deploy
+
+At each new deployment, repeat the [build steps](#build).
 
 ### With Apache2
 

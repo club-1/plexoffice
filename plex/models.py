@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.utils.translation import gettext_lazy as _
 from .plex import sectionKey2Title
 
 import jsonfield
@@ -15,26 +16,29 @@ def genString():
 class Invitation(models.Model):
     token = models.CharField(
         default=genString,
-        max_length=255)
+        max_length=255,
+        verbose_name=_('Token'))
     date_creation = models.DateTimeField(
         default=timezone.now,
-        verbose_name="Creation date")
+        verbose_name=_('Creation date'))
     date_usage = models.DateTimeField(
         null=True,
         blank=True,
-        verbose_name="Usage date")
+        verbose_name=_('Usage date'))
     used_by = models.CharField(
         max_length=255,
         null=True,
-        blank=True)
-    libraries = jsonfield.JSONField()
+        blank=True,
+        verbose_name=_('Used by'))
+    libraries = jsonfield.JSONField(verbose_name=_('Libraries'))
     sent_to = models.CharField(
         max_length=255,
         null=True,
-        blank=True)
+        blank=True,
+        verbose_name=_('Sent to'))
 
     class Meta:
-        verbose_name = "invitation"
+        verbose_name = _('Invitation')
         ordering = ['date_creation']
 
     def __str__(self):
@@ -48,8 +52,8 @@ class Invitation(models.Model):
 
     def title_libraries(self):
         return list(map(lambda x: sectionKey2Title(x), self.libraries))
-    title_libraries.verbose_name = "libraries"
+    title_libraries.short_description = _('Libraries')
 
     def nb_libraries(self):
         return len(self.libraries)
-    nb_libraries.verbose_name = "libraries"
+    nb_libraries.short_description = _('Libraries')

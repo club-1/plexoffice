@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-29 01:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: plex/admin.py:8
+msgid "Sent"
+msgstr "Envoyées"
+
+#: plex/admin.py:18
+msgid "Yes"
+msgstr "Oui"
+
+#: plex/admin.py:19
+msgid "No"
+msgstr "Non"
+
+#: plex/admin.py:48 plex/models.py:20
+msgid "Token"
+msgstr "Token"
+
+#: plex/admin.py:52
+msgid "Link"
+msgstr "Lien"
+
+#: plex/admin.py:53
+msgid "Share url"
+msgstr "Url de partage"
+
+#: plex/admin.py:57
+msgid "Mark as not sent"
+msgstr "Marquer comme non envoyées"
+
+#: plex/admin.py:68 plex/admin.py:69
+msgid "Plexoffice admin"
+msgstr ""
+
+#: plex/admin.py:70
+msgid "Plexoffice administration"
+msgstr ""
+
+#: plex/forms.py:15 plex/models.py:33 plex/models.py:55 plex/models.py:59
+msgid "Libraries"
+msgstr "Bibliothèques"
+
+#: plex/models.py:23
+msgid "Creation date"
+msgstr "Date de création"
+
+#: plex/models.py:27
+msgid "Usage date"
+msgstr "Date d'utilisation"
+
+#: plex/models.py:32
+msgid "Used by"
+msgstr "Utilisée par"
+
+#: plex/models.py:38
+msgid "Sent to"
+msgstr "Envoyée à"
+
+#: plex/models.py:41
+msgid "Invitation"
+msgstr "Invitation"
