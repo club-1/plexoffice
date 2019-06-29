@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-29 01:45+0000\n"
+"POT-Creation-Date: 2019-06-29 11:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,8 +39,8 @@ msgid "Link"
 msgstr "Lien"
 
 #: plex/admin.py:53
-msgid "Share url"
-msgstr "Url de partage"
+msgid "Url"
+msgstr "Url"
 
 #: plex/admin.py:57
 msgid "Mark as not sent"
@@ -57,6 +57,10 @@ msgstr ""
 #: plex/forms.py:15 plex/models.py:33 plex/models.py:55 plex/models.py:59
 msgid "Libraries"
 msgstr "Bibliothèques"
+
+#: plex/forms.py:29
+msgid "Select at least 1."
+msgstr "Choisissez au moins 1."
 
 #: plex/models.py:23
 msgid "Creation date"

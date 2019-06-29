@@ -50,7 +50,7 @@ class InvitationAdmin(admin.ModelAdmin):
 
     def share_url(self, obj):
         return format_html('<a href="{url}" target="_blank">{link}</a>', url=obj.share_url(), link=_('Link'))
-    share_url.short_description = _('Share url')
+    share_url.short_description = _('Url')
 
     def mark_not_sent(self, request, queryset):
         queryset.update(sent_to = None)

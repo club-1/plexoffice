@@ -6,6 +6,8 @@ A micro backoffice to manage some Plex stuffs, extensively using Django admin.
 
 ## Get started
 
+To run the project.
+
 ### Install
 
 ```bash
