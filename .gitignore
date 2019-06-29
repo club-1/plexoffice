@@ -1,4 +1,5 @@
-settings.py
+*.env
+!.dev.env
 collect/*
 !collect/README.md
 

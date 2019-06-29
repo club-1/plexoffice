@@ -16,17 +16,16 @@ To run the project.
 virtualenv env
 . env/bin/activate
 
-# install dependencies
-pip install -r requirements.txt
-
-# copy sample settings file and edit credentials
-cp plexoffice/settings.sample.py plexoffice/settings.py
-nano plexoffice/settings.py
+# copy sample .dev.env file and edit Plex credentials
+cp .dev.env .env
+nano .env
 ```
 
 ### Build
 
 ```bash
+# install dependencies
+pip install -r requirements.txt
 # update database schema
 ./manage.py migrate
 # collect static files (not needed for development)
@@ -50,6 +49,11 @@ Generate the translation files:
     ./manage.py makemessages -a
 
 ## Deploy
+Edit `.env` file to give it safe values for productions:
+1.  change the `SECRET_KEY`
+2.  set `DEBUG` to `False`
+3.  set `ALLOWED_HOSTS` value (coma separated list)
+4.  use another `DATABASE_URL` than sqlite if possible (see [django-environ docs](https://github.com/joke2k/django-environ#tips))
 
 At each new deployment, repeat the [build steps](#build).
 

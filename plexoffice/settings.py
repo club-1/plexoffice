@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import environ
 from django.utils.translation import gettext_lazy as _
+
+env = environ.Env()
+environ.Env.read_env('.env')
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +26,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c^7btdox2&1=nhor6fev88btn0_908t--tzhhsgxf+)qbv=tm1'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 
 # Application definition
@@ -79,10 +84,7 @@ WSGI_APPLICATION = 'plexoffice.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'sqlite3'),
-    }
+    'default': env.db(),
 }
 
 
@@ -108,16 +110,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'fr-fr'
+LANGUAGE_CODE = env('LANGUAGE_CODE', default='fr-fr')
 
 LANGUAGES = [
     ('en', _('English')),
     ('fr', _('French')),
 ]
 
-LOCALE_PATHS = []
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = env('TIME_ZONE', default='UTC')
 
 USE_I18N = True
 
@@ -129,7 +129,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = env('STATIC_URL', default='/static/')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
@@ -138,8 +138,8 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "collect")
 
 PLEX = {
-    'LOGIN': '',
-    'PASSWORD': '',
-    'SERVER': '',
-    'URL': 'http://localhost:32000',
+    'LOGIN': env('PLEX_LOGIN'),
+    'PASSWORD': env('PLEX_PASSWORD'),
+    'SERVER': env('PLEX_SERVER'),
+    'URL': env('PLEX_URL', default='http://localhost:32000'),
 }
