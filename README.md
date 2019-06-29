@@ -31,7 +31,7 @@ pip install -r requirements.txt
 # collect static files (not needed for development)
 ./manage.py collectstatic --noinput
 # generate translation files
-./manage.py compilemessages
+./manage.py compilemessages -v0
 ```
 
 ### Run

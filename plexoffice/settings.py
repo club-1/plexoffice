@@ -14,12 +14,12 @@ import os
 import environ
 from django.utils.translation import gettext_lazy as _
 
-env = environ.Env()
-environ.Env.read_env('.env')
-
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
@@ -86,6 +86,11 @@ WSGI_APPLICATION = 'plexoffice.wsgi.application'
 DATABASES = {
     'default': env.db(),
 }
+
+# Dirty hack to fix relative to PWD sqlite url of django-environ
+default_db = DATABASES['default'];
+if default_db['ENGINE'] == 'django.db.backends.sqlite3':
+    default_db['NAME'] = os.path.join(BASE_DIR, default_db['NAME'])
 
 
 # Password validation
