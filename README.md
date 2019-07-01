@@ -16,8 +16,8 @@ To run the project.
 virtualenv env
 . env/bin/activate
 
-# copy sample .dev.env file and edit Plex credentials
-cp .dev.env .env
+# copy sample .example.env file and edit Plex credentials
+cp .example.env .env
 nano .env
 ```
 

@@ -1,5 +1,5 @@
 *.env
-!.dev.env
+!.example.env
 collect/*
 !collect/README.md
 

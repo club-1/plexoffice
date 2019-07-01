@@ -13,13 +13,25 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import environ
 from django.utils.translation import gettext_lazy as _
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+# Get variables from environment. Fallback to .env file.
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+
+# Init Sentry bug tracking
+# https://docs.sentry.io
+
+sentry_sdk.init(
+    dsn=env('SENTRY_DSN', default=None),
+    integrations=[DjangoIntegration()],
+    environment=env('ENVIRONMENT', default='Production'),
+)
 
 
 # Quick-start development settings - unsuitable for production
@@ -141,6 +153,10 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, "collect")
+
+
+# Plex credentials
+# https://python-plexapi.readthedocs.io/en/latest/
 
 PLEX = {
     'LOGIN': env('PLEX_LOGIN'),
