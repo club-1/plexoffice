@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.shortcuts import redirect
+from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
 from .plex import sectionKey2Title
 
@@ -9,13 +9,13 @@ from hashlib import sha1
 from time import time
 
 
-def genString():
+def gen_string():
     return sha1(str(time()).encode()).hexdigest()
 
 
 class Invitation(models.Model):
     token = models.CharField(
-        default=genString,
+        default=gen_string,
         max_length=255,
         verbose_name=_('Token'))
     date_creation = models.DateTimeField(
@@ -48,7 +48,7 @@ class Invitation(models.Model):
         return self.sent_to is not None
 
     def share_url(self):
-        return redirect('plex-invite-home', self.token).url
+        return resolve_url('plex-invite-home', self.token)
 
     def title_libraries(self):
         return list(map(lambda x: sectionKey2Title(x), self.libraries))

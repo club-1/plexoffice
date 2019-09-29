@@ -41,14 +41,14 @@ class InvitationAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_creation'
     ordering = ('date_creation', )
     search_fields = ('token', 'used_by')
-    readonly_fields = ('date_usage', 'used_by', 'share_url')
+    readonly_fields = ('date_usage', 'used_by')
 
-    def token_trim(self, obj):
+    def token_trim(self, obj: Invitation):
         return format_html('<div class="token-hash" title="{token}">{token}</div>', token=obj.token)
     token_trim.short_description = _('Token')
     token_trim.admin_order_field = 'token'
 
-    def share_url(self, obj):
+    def share_url(self, obj: Invitation):
         return format_html('<a href="{url}" target="_blank">{link}</a>', url=obj.share_url(), link=_('Link'))
     share_url.short_description = _('Url')
 

@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='invitation',
             name='token',
-            field=models.CharField(default=plex.models.genString, max_length=255, verbose_name='Token'),
+            field=models.CharField(default=plex.models.gen_string, max_length=255, verbose_name='Token'),
         ),
         migrations.AlterField(
             model_name='invitation',

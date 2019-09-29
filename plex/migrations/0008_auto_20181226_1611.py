@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='token',
             name='string',
-            field=models.CharField(default=plex.models.genString, max_length=255),
+            field=models.CharField(default=plex.models.gen_string, max_length=255),
         ),
     ]
